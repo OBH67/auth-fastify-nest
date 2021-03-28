@@ -12,8 +12,8 @@ import { JwtModule } from '@nestjs/jwt';
       secret: 'hard!to-guess_secret',
       signOptions: { expiresIn: '24h' },
     }),
-    MongooseModule.forFeature([{name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
-  providers: [UserService, UserResolver, JwtStrategy],
+  providers: [UserResolver, UserService, JwtStrategy],
 })
 export class UserModule {}

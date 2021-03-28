@@ -20,7 +20,7 @@ export class UserService {
         email: createUserInput.email,
       });
       if (isUser) {
-        throw new GraphQLError('This User already exist on the database');
+        throw new GraphQLError('Nah bro you already exist');
       } else {
         createUserInput.password = await bcrypt
           .hash(createUserInput.password, 10)
@@ -28,26 +28,26 @@ export class UserService {
         return await new this.UserModel(createUserInput).save();
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
-  async login({ password, email}) {
+  async login({ password, email }) {
     try {
       const user = await this.UserModel.findOne({ email });
       return user && (await bcrypt.compare(password, user.password))
         ? await this.jwtService.signAsync({ email, _id: user._id })
-        : new GraphQLError('The password or email is wrong');
+        : new GraphQLError('Nah homie, wrong password/email');
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
   async findAll() {
     try {
       return await this.UserModel.find().exec();
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -56,8 +56,8 @@ export class UserService {
       return await this.UserModel.findByIdAndUpdate(_id, updateUserInput, {
         new: true,
       }).exec();
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -68,24 +68,24 @@ export class UserService {
         User.password = await bcrypt.hash(newPass, 10);
         return await new this.UserModel(User).save();
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.error(err);
     }
   }
 
   async findOne(_id: Types.ObjectId) {
     try {
       return await this.UserModel.findById(_id);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.error(err);
     }
   }
 
   async remove(_id: string) {
     try {
-      return this.UserModel.findByIdAndRemove(_id);
-    } catch (error) {
-      console.log(error);
+      return await this.UserModel.findByIdAndRemove(_id);
+    } catch (err) {
+      console.error(err);
     }
   }
 }

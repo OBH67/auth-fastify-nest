@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GraphQLModule } from '@nestjs/graphql';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/auth-nest'),
+    MongooseModule.forRoot('mongodb://localhost:27017/auth-nest'),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       playground: true,

@@ -32,7 +32,7 @@ export class UserService {
     }
   }
 
-  async login({ password, email }) {
+  async login({ password, email}) {
     try {
       const user = await this.UserModel.findOne({ email });
       return user && (await bcrypt.compare(password, user.password))

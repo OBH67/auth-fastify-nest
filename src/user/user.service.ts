@@ -28,7 +28,7 @@ export class UserService {
         return await new this.UserModel(createUserInput).save();
       }
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   }
 
